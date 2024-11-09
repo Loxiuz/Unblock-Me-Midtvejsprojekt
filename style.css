@@ -24,10 +24,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
   }
 
-/* .player {
+.block {
     background-color: rgb(185, 56, 189);
-}   */
+}   
 
-/* .food {
+.player {
     background-color: rgb(0, 218, 22);
-} */
+}

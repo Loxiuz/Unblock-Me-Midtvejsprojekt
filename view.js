@@ -1,4 +1,4 @@
-export {displayBoard, createBoard};
+export {displayBoard,createBoard};
 //import {readFromCell as readFromCell} from './model.js';
 
 // Board dimensions - These have been replace with row and col from controller
@@ -33,24 +33,21 @@ function createBoard(row, col) {
     cssVariables.style.setProperty('--grid-repeat', col)
 }
 
- function displayBoard(rows, cols) {
+  function displayBoard(rows, cols) {
     const cells = document.querySelectorAll("#grid .cell");
 
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
         const index = row * cols + col;
   
-        /* switch (readFromCell(row, col)) {
+        switch (readFromCell(row, col)) {
           case 0:
             cells[index].classList.remove("player", "food");
             break;
           case 1: // Note: doesn't remove goal if previously set
             cells[index].classList.add("player");
             break;
-          case 2: // Note: doesn't remove player if previously set
-            cells[index].classList.add("food");
-            break;
-        } */
+        }
       }
     }
-  } 
+  }  
