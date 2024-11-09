@@ -1,11 +1,10 @@
 export default class Block {
-    static nextId = 1;
+  static nextId = 1;
 
-    constructor (length, direction, isPlayer) {
-        this.length = length; //int
-        this.id = Block.nextId++;
-        this.direction = direction; //String
-        this.isPlayer = isPlayer;
-    }
-
+  constructor(direction, type, cells) {
+    this.id = Block.nextId++;
+    this.direction = direction; //String
+    this.type = type;
+    this.cells = cells;
+  }
 }
