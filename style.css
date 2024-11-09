@@ -1,0 +1,33 @@
+:root {
+    --grid-repeat: 20;
+}
+
+.cell {
+    width: 100px;
+    aspect-ratio: 1 / 1;
+    background-color: #777777;
+    border-right: 1px dashed darkgray;
+    border-bottom: 1px dashed darkgray;
+  }
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-repeat), max-content);
+    border-left: 1px dashed darkgray;
+    border-top: 1px dashed darkgray;
+    width: fit-content
+}
+
+body {
+    background-color: #666;
+    color: #6b6;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+/* .player {
+    background-color: rgb(185, 56, 189);
+}   */
+
+/* .food {
+    background-color: rgb(0, 218, 22);
+} */
