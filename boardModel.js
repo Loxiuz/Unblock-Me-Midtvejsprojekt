@@ -3,7 +3,7 @@ export {
   makeGrid,
   readFromCell,
   writeToCell,
-  writeBlockToCells as writeBlockToCell,
+  writeBlockToCells,
 };
 
 let grid = [];
@@ -28,7 +28,7 @@ function writeToCell(row, col, value) {
 }
 
 function writeBlockToCells(block) {
-  for (let i = 0; i < block.cells.size(); i++) {
-    grid.set(block.cells.get(i).row, block.cells.get(i).col, block.type);
+  for (let i = 0; i < block.cells.length; i++) {
+    grid.set(block.cells[i].row, block.cells[i].col, block.type);
   }
 }

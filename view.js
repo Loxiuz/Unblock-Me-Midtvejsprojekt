@@ -22,6 +22,7 @@ function displayBoard(rows, cols) {
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const index = row * cols + col;
+      //console.log(readFromCell(row, col));
       switch (readFromCell(row, col)) {
         case 0:
           cells[index].classList.remove("player", "block");
