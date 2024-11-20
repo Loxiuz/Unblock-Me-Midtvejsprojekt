@@ -7,9 +7,13 @@ window.addEventListener("load", start);
 
 let row = 6;
 let col = 6;
+let direction = "ArrowLeft";
+let block; // Selected block to move
 
 async function start() {
   console.log(`Javascript kører`);
+
+  document.addEventListener("keydown", keydown);
 
   model.makeGrid(row, col);
   view.createBoard(row, col);
@@ -34,7 +38,7 @@ async function setLevel() {
     model.writeBlockToCells(data.blocks[i]);
   }
 
-  console.log(data.blocks);
+  //console.log(data.blocks);
 
   /* const cells = new Stack();
   cells.push({ row: 2, col: 3 });
@@ -45,9 +49,39 @@ async function setLevel() {
   model.writeBlockToCell(block); */
 }
 
+function keydown(event) {
+  console.log(event);
+  direction = event.key;
+}
+
+function blockListener() {
+  
+}
+
+function selectedBlock(event) {
+  
+}
+
+function mvoeBlock() {
+
+
+  model.move(direction, block)
+
+
+  // evt. setTimeout??
+
+  // remove from model
+}
+
+mvoeBlock();
+
+
 //TODO - Main focus: Make the blocks move
 /* 
+Done: 
     - Maybe convert the block cells into queues to get same functionallity as in snake to move blocks
     - Make the "goal"; a missing wall 
+
+TODO:
     - Note for how to move the blocks: Click on cell to move, click on where to move it = cell moves
 */

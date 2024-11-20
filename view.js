@@ -33,6 +33,13 @@ function displayBoard(rows, cols) {
         case 2:
           cells[index].classList.add("block");
           break;
+        /* case 3:
+          cells[index].classList.add("goal"); */
+      }
+
+      if (row === 2 && col === 5) {
+        cells[index].classList.add("goal");
+        //console.log(cells[index]);
       }
     }
   }

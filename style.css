@@ -15,7 +15,8 @@
     grid-template-columns: repeat(var(--grid-repeat), max-content);
     border-left: 1px dashed darkgray;
     border-top: 1px dashed darkgray;
-    width: fit-content
+    width: fit-content;
+    border: solid black 1px;
 }
 
 body {
@@ -26,8 +27,14 @@ body {
 
 .block {
     background-color: rgb(185, 56, 189);
+    border: black solid 1px;
 }   
 
 .player {
     background-color: rgb(0, 218, 22);
+    border: black solid 1px;
+}
+
+.goal {
+    background-color: darkblue;
 }

@@ -1,4 +1,5 @@
 {
+    "goal": {"row": 5, "col": 2},
     "blocks": [
         {"direction": "horizontal", "type": 1, "cells": [{"row": 2, "col": 0}, {"row": 2, "col": 1}]},
         {"direction": "vertical", "type": 2, "cells": [{"row": 0, "col": 1}, {"row": 1, "col": 1}]},
