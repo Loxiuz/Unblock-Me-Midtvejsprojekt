@@ -1,10 +1,5 @@
 import { Grid } from "./grid.js";
-export {
-  makeGrid,
-  readFromCell,
-  writeToCell,
-  writeBlockToCells,
-};
+export { makeGrid, readFromCell, writeToCell, writeBlockToCells };
 
 let grid = [];
 
@@ -28,7 +23,12 @@ function writeToCell(row, col, value) {
 }
 
 function writeBlockToCells(block) {
+  // console.log(block);
   for (let i = 0; i < block.cells.length; i++) {
-    grid.set(block.cells[i].row, block.cells[i].col, block.type);
+    grid.set(
+      block.cells.get(i).data.row,
+      block.cells.get(i).data.col,
+      block.type
+    );
   }
 }

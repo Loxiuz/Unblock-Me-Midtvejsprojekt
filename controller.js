@@ -1,6 +1,7 @@
 //import Block from "./Block.js";
 import * as model from "./boardModel.js";
 import * as view from "./view.js";
+import Queue from "./queue.js";
 
 window.addEventListener("load", start);
 
@@ -17,13 +18,23 @@ async function start() {
 }
 
 async function setLevel() {
-    const response = await fetch("level.json");
-    const data = await response.json();
+  const response = await fetch("level.json");
+  const data = await response.json();
 
+  for (let i = 0; i < data.blocks.length; i++) {
+    const cells = data.blocks[i].cells;
+    const queue = new Queue();
 
-    for(let i = 0; i < data.blocks.length; i++) {
-        model.writeBlockToCells(data.blocks[i]);
+    for (let j = 0; j < cells.length; j++) {
+      queue.enqueue(cells[j]);
     }
+
+    data.blocks[i].cells = queue;
+
+    model.writeBlockToCells(data.blocks[i]);
+  }
+
+  console.log(data.blocks);
 
   /* const cells = new Stack();
   cells.push({ row: 2, col: 3 });
@@ -33,8 +44,6 @@ async function setLevel() {
 
   model.writeBlockToCell(block); */
 }
-
-
 
 //TODO - Main focus: Make the blocks move
 /* 
