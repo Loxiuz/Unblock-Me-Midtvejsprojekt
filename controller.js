@@ -5,25 +5,29 @@ import Queue from "./queue.js";
 
 window.addEventListener("load", start);
 
-let row = 6;
-let col = 6;
-let direction = "ArrowLeft";
-let block; // Selected block to move
+let rows = 6;
+let cols = 6;
+let currDirection = "";
+let prevDirection = ""; // Should maybe be in board model.
+let block; // selected block
+let blocks = [];
 
 async function start() {
   console.log(`Javascript kører`);
 
   document.addEventListener("keydown", keydown);
 
-  model.makeGrid(row, col);
-  view.createBoard(row, col);
+  model.makeGrid(rows, cols);
+  view.createBoard(rows, cols);
   await setLevel();
-  view.displayBoard(row, col);
+  view.displayBoard(rows, cols);
+  blockListener();
 }
 
 async function setLevel() {
   const response = await fetch("level.json");
   const data = await response.json();
+  blocks = data.blocks;
 
   for (let i = 0; i < data.blocks.length; i++) {
     const cells = data.blocks[i].cells;
@@ -37,44 +41,78 @@ async function setLevel() {
 
     model.writeBlockToCells(data.blocks[i]);
   }
-
-  //console.log(data.blocks);
-
-  /* const cells = new Stack();
-  cells.push({ row: 2, col: 3 });
-  cells.push({ row: 2, col: 4 });
-
-  const block = new Block("h", 1, cells);
-
-  model.writeBlockToCell(block); */
 }
 
 function keydown(event) {
-  console.log(event);
-  direction = event.key;
+  // console.log(event);
+  currDirection = event.key;
+
+  if (block) {
+    if (!prevDirection) {
+      if (block.direction === "horizontal") {
+        prevDirection = "ArrowRight";
+      } else if (block.direction === "vertical") {
+        prevDirection = "ArrowDown";
+      }
+    }
+    moveBlock(block);
+  }
 }
 
 function blockListener() {
-  
+  const cells = document.querySelectorAll("#grid .cell");
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const index = row * cols + col;
+      if (
+        model.readFromCell(row, col) === 2 ||
+        model.readFromCell(row, col) === 1
+      ) {
+        cells[index].addEventListener("click", (e) => {
+          e.preventDefault();
+          prevDirection = "";
+          currDirection = "";
+          setSelectedBlock(getBlockId({ row: row, col: col }));
+        });
+      }
+    }
+  }
 }
 
-function selectedBlock(event) {
-  
+function getBlockId(coords) {
+  for (let i = 0; i < blocks.length; i++) {
+    const cells = blocks[i].cells;
+    for (let j = 0; j < cells.length; j++) {
+      const cellData = cells.get(j).data;
+      if (cellData.row === coords.row && cellData.col === coords.col) {
+        return i;
+      }
+    }
+  }
 }
 
-function mvoeBlock() {
+function setSelectedBlock(blockId) {
+  block = model.getBlocks()[blockId];
 
+  console.log(blockId);
+}
 
-  model.move(direction, block)
+function moveBlock(block) {
+  model.move(currDirection, block);
+  console.log(prevDirection);
+  if (currDirection !== prevDirection) {
+    for (let i = 0; i < block.cells.size() - 1; i++) {
+      model.move(currDirection, block);
+    }
+  }
+  prevDirection = currDirection;
 
-
+  view.displayBoard(rows, cols);
   // evt. setTimeout??
 
   // remove from model
 }
-
-mvoeBlock();
-
 
 //TODO - Main focus: Make the blocks move
 /* 

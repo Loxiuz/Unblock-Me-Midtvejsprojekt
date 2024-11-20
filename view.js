@@ -17,6 +17,7 @@ function createBoard(row, col) {
 }
 
 function displayBoard(rows, cols) {
+  console.log("Display");
   const cells = document.querySelectorAll("#grid .cell");
 
   for (let row = 0; row < rows; row++) {
