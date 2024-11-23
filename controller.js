@@ -55,7 +55,7 @@ function keydown(event) {
         prevDirection = "ArrowDown";
       }
     }
-    moveBlock(block);
+    moveBlockByArrowKey(block);
   }
 }
 
@@ -95,10 +95,10 @@ function getBlockId(coords) {
 function setSelectedBlock(blockId) {
   block = model.getBlocks()[blockId];
 
-  console.log(blockId);
+  // console.log(blockId);
 }
 
-function moveBlock(block) {
+function moveBlockByArrowKey(block) {
   model.move(currDirection, block);
   console.log(prevDirection);
   if (currDirection !== prevDirection) {

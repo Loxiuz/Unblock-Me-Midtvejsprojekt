@@ -88,9 +88,10 @@ function move(currDirection, block) {
       }
       break;
   }
-  blockCells.dequeue();
 
   blockCells.enqueue(head);
+
+  blockCells.dequeue();
 
   for (let i = 0; i < blockCells.size(); i++) {
     const blockData = blockCells.get(i).data;
