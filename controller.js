@@ -2,6 +2,7 @@
 import * as model from "./boardModel.js";
 import * as view from "./view.js";
 import Queue from "./queue.js";
+import * as solver from "./solver.js"
 
 window.addEventListener("load", start);
 
@@ -18,6 +19,7 @@ async function start() {
   document.addEventListener("keydown", keydown);
 
   model.makeGrid(rows, cols);
+  //console.log(model.makeGrid("CONTROLLER, MODEL.MAKEGRID FUNCTION" + rows, cols))
   view.createBoard(rows, cols);
   await setLevel();
   view.displayBoard(rows, cols);
@@ -95,6 +97,9 @@ function getBlockId(coords) {
 function setSelectedBlock(blockId) {
   block = model.getBlocks()[blockId];
 
+  console.log(block);
+  console.log("GRID IN CONTROLLER: " + model.grid);
+  console.log("Is blocked is = " + solver.isBlocked(block, model.grid));
   // console.log(blockId);
 }
 

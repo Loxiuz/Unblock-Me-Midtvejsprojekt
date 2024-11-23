@@ -8,7 +8,7 @@ export {
   move,
 };
 
-let grid = [];
+export let grid = [];
 let blocks = [];
 
 function getBlocks() {
@@ -22,6 +22,7 @@ function makeGrid(row, col) {
       grid.set(i, j, 0);
     }
   }
+
   return grid;
 }
 
