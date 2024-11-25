@@ -1,7 +1,7 @@
 import * as model from "./boardModel.js";
 export { isBlocked, solve };
 
-function solve(block) {
+function solve(block, grid) {
   // const blocks = model.getBlocks();
 }
 
@@ -23,10 +23,4 @@ function isBlocked(block, direction) {
       console.log("LOOKING DOWN");
       return model.readFromCell(blockHead.row + 1, blockHead.col) != 0;
   }
-
-  // RIGHT
-
-  // UP
-
-  // DOWN
 }

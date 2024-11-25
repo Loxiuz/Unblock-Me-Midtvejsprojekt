@@ -31,7 +31,7 @@ async function start() {
 
 function solveMeButton() {
   console.log("BUTTON CLICKED");
-  solver.solve(blocks[0]);
+  solver.solve(blocks[0], model.getGrid());
   view.displayBoard(rows, cols);
 }
 
