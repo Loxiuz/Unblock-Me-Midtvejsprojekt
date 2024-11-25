@@ -8,7 +8,7 @@ export {
   writeBlockToCells,
   move,
   getGrid,
-  setLevel
+  setLevel,
 };
 
 let grid;
@@ -44,7 +44,7 @@ function writeToCell(row, col, value) {
 function writeBlockToCells(block) {
   blocks.push(block);
   for (let i = 0; i < block.cells.length; i++) {
-    console.log(block.cells.get(i));
+    // console.log(block.cells.get(i));
     grid.set(
       block.cells.get(i).data.row,
       block.cells.get(i).data.col,
@@ -63,12 +63,15 @@ function move(currDirection, block) {
     grid.set(blockData.row, blockData.col, 0);
   }
 
-  const head = {
-    row: blockCells.get(blockCells.size() - 1).data.row,
-    col: blockCells.get(blockCells.size() - 1).data.col,
-  };
+  let head = blockCells.head.data;
 
-  console.log(head);
+  if (currDirection === "ArrowRight" || currDirection === "ArrowDown") {
+    head = {
+      row: blockCells.get(blockCells.size() - 1).data.row,
+      col: blockCells.get(blockCells.size() - 1).data.col,
+    };
+  }
+
   console.log(currDirection);
 
   switch (currDirection) {
@@ -98,9 +101,10 @@ function move(currDirection, block) {
       break;
   }
 
+  blockCells.enqueue(head);
   blockCells.dequeue();
 
-  blockCells.enqueue(head);
+  console.log("Head: ", head);
 
   for (let i = 0; i < blockCells.size(); i++) {
     const blockData = blockCells.get(i).data;

@@ -1,25 +1,11 @@
 import * as model from "./boardModel.js";
 export { isBlocked, moveBlock };
 
-
-async function moveBlock(block, grid) {
-  if (block.id === 0 && !isBlocked(block, grid)) {
-    console.log("PLAYER IN IF STATEMTNT");
-    model.move("ArrowRight", block);
-    moveBlock(block, grid);
-  } else {
-    // BE CAREFUL WITH ENDLESS LOOP
-    await model.setLevel();
-    const currentBlocks = model.getBlocks();
-    if (!isBlocked(currentBlocks[block.id+1]), grid) {
-      model.move(currentBlocks[block.id+1], grid);
-      moveBlock(currentBlocks[block.id+1]);
-    }
-    console.log("PLAYER IS BLOCKED")
-  }
+function moveBlock(block, grid) {
+  const blocks = model.getBlocks();
 }
 
-function isBlocked(block, grid) {
+function isBlocked(block) {
   const blockHead = block.cells.tail.data;
   const blockTail = block.cells.head.data;
   console.log("Block Head:", blockHead);

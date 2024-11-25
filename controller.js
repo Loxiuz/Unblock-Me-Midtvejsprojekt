@@ -35,8 +35,6 @@ async function solveMeButton() {
   view.displayBoard(rows, cols);
 }
 
-
-
 function keydown(event) {
   // console.log(event);
   currDirection = event.key;
@@ -101,20 +99,10 @@ function setSelectedBlock(blockId) {
   block = model.getBlocks()[blockId];
 
   console.log(block);
-  // console.log("GRID IN CONTROLLER: " + model.getGrid().grid);
-  // console.log("Is blocked is = ", solver.isBlocked(block, model.getGrid()));
-  // console.log(blockId);
 }
 
 function moveBlockByArrowKey(block) {
   model.move(currDirection, block);
-  console.log(prevDirection);
-  if (currDirection !== prevDirection) {
-    for (let i = 0; i < block.cells.size() - 1; i++) {
-      model.move(currDirection, block);
-    }
-  }
-  prevDirection = currDirection;
 
   view.displayBoard(rows, cols);
   // evt. setTimeout??
