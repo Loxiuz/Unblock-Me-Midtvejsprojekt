@@ -23,7 +23,7 @@ function isBlocked(block, grid) {
       console.log("LOOKING RIGHT");
       return model.readFromCell(blockHead.row, blockHead.col + 1) != 0;
     }
-  } else {
+  } else if (block.direction === "vertical") {
     if (blockHead.row < blockTail.row) {
       // UP
       console.log("LOOKING UP");
