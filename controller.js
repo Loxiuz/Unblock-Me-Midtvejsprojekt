@@ -32,6 +32,13 @@ async function start() {
 function solveMeButton() {
   console.log("BUTTON CLICKED");
   solver.solve(blocks[0], model.getGrid());
+  /* This should not be necessary */
+  for (let i = 0; i < 4; i++) {
+    model.move("ArrowRight", blocks[0]);
+  }
+  solver.solve(blocks[0], model.getGrid());
+  /* ---------------------------- */
+
   view.displayBoard(rows, cols);
 }
 
