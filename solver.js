@@ -1,9 +1,21 @@
 import * as model from "./boardModel.js";
-export { isBlocked };
+export { isBlocked, moveBlock };
 
-function moveBlock(block, grid) {
-  if (block.id === 0) {
-    isBlocked(block, grid);
+
+async function moveBlock(block, grid) {
+  if (block.id === 0 && !isBlocked(block, grid)) {
+    console.log("PLAYER IN IF STATEMTNT");
+    model.move("ArrowRight", block);
+    moveBlock(block, grid);
+  } else {
+    // BE CAREFUL WITH ENDLESS LOOP
+    await model.setLevel();
+    const currentBlocks = model.getBlocks();
+    if (!isBlocked(currentBlocks[block.id+1]), grid) {
+      model.move(currentBlocks[block.id+1], grid);
+      moveBlock(currentBlocks[block.id+1]);
+    }
+    console.log("PLAYER IS BLOCKED")
   }
 }
 
@@ -31,9 +43,9 @@ function isBlocked(block, grid) {
     } else {
       // DOWN
       console.log("LOOKING DOWN");
-      console.log("GRID: ", grid);
-      console.log("Row:", blockHead.row + 1);
-      console.log("Col:", blockHead.col);
+      //console.log("GRID: ", grid);
+      //console.log("Row:", blockHead.row + 1);
+      //console.log("Col:", blockHead.col);
       return model.readFromCell(blockHead.row + 1, blockHead.col) != 0;
     }
   }

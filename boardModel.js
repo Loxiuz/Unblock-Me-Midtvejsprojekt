@@ -1,4 +1,5 @@
 import { Grid } from "./grid.js";
+import Queue from "./queue.js";
 export {
   getBlocks,
   makeGrid,
@@ -7,6 +8,7 @@ export {
   writeBlockToCells,
   move,
   getGrid,
+  setLevel
 };
 
 let grid;
@@ -42,6 +44,7 @@ function writeToCell(row, col, value) {
 function writeBlockToCells(block) {
   blocks.push(block);
   for (let i = 0; i < block.cells.length; i++) {
+    console.log(block.cells.get(i));
     grid.set(
       block.cells.get(i).data.row,
       block.cells.get(i).data.col,
@@ -103,5 +106,25 @@ function move(currDirection, block) {
     const blockData = blockCells.get(i).data;
     console.log(blockData);
     grid.set(blockData.row, blockData.col, block.type);
+  }
+}
+
+async function setLevel() {
+  const response = await fetch("level.json");
+  const data = await response.json();
+  //todo: Delete?
+  //const blocks = data.blocks;
+
+  for (let i = 0; i < data.blocks.length; i++) {
+    const cells = data.blocks[i].cells;
+    const queue = new Queue();
+
+    for (let j = 0; j < cells.length; j++) {
+      queue.enqueue(cells[j]);
+    }
+
+    data.blocks[i].cells = queue;
+
+    writeBlockToCells(data.blocks[i]);
   }
 }

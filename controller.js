@@ -18,33 +18,24 @@ async function start() {
   console.log(`Javascript kører`);
 
   document.addEventListener("keydown", keydown);
+  document.getElementById("solve_me").addEventListener("click", solveMeButton);
 
   model.makeGrid(rows, cols);
   //console.log(model.makeGrid("CONTROLLER, MODEL.MAKEGRID FUNCTION" + rows, cols))
   view.createBoard(rows, cols);
-  await setLevel();
+  await model.setLevel();
+  blocks = model.getBlocks();
   view.displayBoard(rows, cols);
   blockListener();
 }
 
-async function setLevel() {
-  const response = await fetch("level.json");
-  const data = await response.json();
-  blocks = data.blocks;
-
-  for (let i = 0; i < data.blocks.length; i++) {
-    const cells = data.blocks[i].cells;
-    const queue = new Queue();
-
-    for (let j = 0; j < cells.length; j++) {
-      queue.enqueue(cells[j]);
-    }
-
-    data.blocks[i].cells = queue;
-
-    model.writeBlockToCells(data.blocks[i]);
-  }
+async function solveMeButton() {
+  console.log("BUTTON CLICKED");
+  await solver.moveBlock(blocks[0], model.getGrid());
+  view.displayBoard(rows, cols);
 }
+
+
 
 function keydown(event) {
   // console.log(event);
