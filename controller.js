@@ -29,9 +29,9 @@ async function start() {
   blockListener();
 }
 
-async function solveMeButton() {
+function solveMeButton() {
   console.log("BUTTON CLICKED");
-  await solver.moveBlock(blocks[0], model.getGrid());
+  solver.moveBlock(blocks[0]);
   view.displayBoard(rows, cols);
 }
 

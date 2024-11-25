@@ -54,7 +54,7 @@ function writeBlockToCells(block) {
 }
 
 function move(currDirection, block) {
-  console.log(block);
+  console.log(`Moving block ${block.id} ${currDirection}`);
 
   const blockCells = block.cells;
 
@@ -63,53 +63,36 @@ function move(currDirection, block) {
     grid.set(blockData.row, blockData.col, 0);
   }
 
-  let head = blockCells.head.data;
-
-  if (currDirection === "ArrowRight" || currDirection === "ArrowDown") {
-    head = {
-      row: blockCells.get(blockCells.size() - 1).data.row,
-      col: blockCells.get(blockCells.size() - 1).data.col,
-    };
-  }
-
-  console.log(currDirection);
-
-  switch (currDirection) {
-    case "ArrowLeft":
-      head.col--;
-      if (head.col < 0) {
-        head.col = grid.cols() - 1;
-      }
-      break;
-    case "ArrowRight":
-      head.col++;
-      if (head.col > grid.cols() - 1) {
-        head.col = 0;
-      }
-      break;
-    case "ArrowUp":
-      head.row--;
-      if (head.row < 0) {
-        head.row = grid.rows() - 1;
-      }
-      break;
-    case "ArrowDown":
-      head.row++;
-      if (head.row > grid.rows() - 1) {
-        head.row = 0;
-      }
-      break;
-  }
-
-  blockCells.enqueue(head);
-  blockCells.dequeue();
-
-  console.log("Head: ", head);
-
+  const newPositions = [];
   for (let i = 0; i < blockCells.size(); i++) {
     const blockData = blockCells.get(i).data;
-    console.log(blockData);
-    grid.set(blockData.row, blockData.col, block.type);
+    let newRow = blockData.row;
+    let newCol = blockData.col;
+
+    switch (currDirection) {
+      case "ArrowLeft":
+        newCol = (newCol - 1 + grid.cols()) % grid.cols();
+        break;
+      case "ArrowRight":
+        newCol = (newCol + 1) % grid.cols();
+        break;
+      case "ArrowUp":
+        newRow = (newRow - 1 + grid.rows()) % grid.rows();
+        break;
+      case "ArrowDown":
+        newRow = (newRow + 1) % grid.rows();
+        break;
+    }
+
+    newPositions.push({ row: newRow, col: newCol });
+  }
+
+  for (let i = 0; i < newPositions.length; i++) {
+    const newPosition = newPositions[i];
+    blockCells.get(i).data.row = newPosition.row;
+    blockCells.get(i).data.col = newPosition.col;
+
+    grid.set(newPosition.row, newPosition.col, block.type);
   }
 }
 
