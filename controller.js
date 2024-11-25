@@ -2,7 +2,7 @@
 import * as model from "./boardModel.js";
 import * as view from "./view.js";
 import Queue from "./queue.js";
-import * as solver from "./solver.js"
+import * as solver from "./solver.js";
 
 window.addEventListener("load", start);
 
@@ -12,6 +12,7 @@ let currDirection = "";
 let prevDirection = ""; // Should maybe be in board model.
 let block; // selected block
 let blocks = [];
+let cellEventListeners = [];
 
 async function start() {
   console.log(`Javascript kører`);
@@ -64,6 +65,12 @@ function keydown(event) {
 function blockListener() {
   const cells = document.querySelectorAll("#grid .cell");
 
+  cellEventListeners.forEach(({ cell, listener }) => {
+    cell.removeEventListener("click", listener);
+  });
+
+  cellEventListeners = [];
+
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const index = row * cols + col;
@@ -71,12 +78,17 @@ function blockListener() {
         model.readFromCell(row, col) === 2 ||
         model.readFromCell(row, col) === 1
       ) {
-        cells[index].addEventListener("click", (e) => {
+        const listener = (e) => {
           e.preventDefault();
           prevDirection = "";
           currDirection = "";
           setSelectedBlock(getBlockId({ row: row, col: col }));
-        });
+        };
+
+        cells[index].addEventListener("click", listener);
+
+        // Store the cell and listener reference
+        cellEventListeners.push({ cell: cells[index], listener });
       }
     }
   }
@@ -98,8 +110,8 @@ function setSelectedBlock(blockId) {
   block = model.getBlocks()[blockId];
 
   console.log(block);
-  console.log("GRID IN CONTROLLER: " + model.grid);
-  console.log("Is blocked is = " + solver.isBlocked(block, model.grid));
+  // console.log("GRID IN CONTROLLER: " + model.getGrid().grid);
+  // console.log("Is blocked is = ", solver.isBlocked(block, model.getGrid()));
   // console.log(blockId);
 }
 
@@ -116,7 +128,7 @@ function moveBlockByArrowKey(block) {
   view.displayBoard(rows, cols);
   // evt. setTimeout??
 
-  // remove from model
+  blockListener();
 }
 
 //TODO - Main focus: Make the blocks move

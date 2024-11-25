@@ -6,10 +6,15 @@ export {
   writeToCell,
   writeBlockToCells,
   move,
+  getGrid,
 };
 
-export let grid = [];
+let grid;
 let blocks = [];
+
+function getGrid() {
+  return grid;
+}
 
 function getBlocks() {
   return blocks;
@@ -90,12 +95,13 @@ function move(currDirection, block) {
       break;
   }
 
-  blockCells.enqueue(head);
-
   blockCells.dequeue();
+
+  blockCells.enqueue(head);
 
   for (let i = 0; i < blockCells.size(); i++) {
     const blockData = blockCells.get(i).data;
+    console.log(blockData);
     grid.set(blockData.row, blockData.col, block.type);
   }
 }
