@@ -1,7 +1,7 @@
 import * as model from "./boardModel.js";
-export { isBlocked, moveBlock };
+export { isBlocked, solve };
 
-function moveBlock(block) {
+function solve(block) {
   // const blocks = model.getBlocks();
 }
 

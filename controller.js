@@ -31,7 +31,7 @@ async function start() {
 
 function solveMeButton() {
   console.log("BUTTON CLICKED");
-  solver.moveBlock(blocks[0]);
+  solver.solve(blocks[0]);
   view.displayBoard(rows, cols);
 }
 
